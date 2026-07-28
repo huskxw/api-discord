@@ -19,7 +19,7 @@ const PORT = 3001;
 const DISCORD_BOT_TOKEN = process.env.VITE_DISCORD_BOT_TOKEN;
 const DISCORD_USER_TOKEN = process.env.DISCORD_USER_TOKEN;
 const DISCORD_USER_ID = process.env.VITE_DISCORD_ID;
-const SERVER_ID = process.env.VITE_DISCORD_SERVER_ID || "1078804725916516392";
+const SERVER_ID = process.env.VITE_DISCORD_SERVER_ID || "";
 
 const client = new Client({
   intents: [
@@ -30,7 +30,7 @@ const client = new Client({
 });
 
 if (DISCORD_BOT_TOKEN) {
-  client.login(DISCORD_BOT_TOKEN).catch(() => { });
+  client.login(DISCORD_BOT_TOKEN).catch(() => {});
 }
 
 const lastSpotifyCache = new Map<string, any>();
@@ -121,10 +121,11 @@ class DiscordProfileService {
 
       if (response.ok) {
         const data = await response.json();
+        console.log("RESPOSTA COMPLETA DA API DO DISCORD (/profile):", JSON.stringify(data, null, 2));
         CacheService.set(cacheKey, data, 1000 * 60 * 5);
         return data;
       }
-    } catch { }
+    } catch {}
 
     return null;
   }
@@ -146,7 +147,7 @@ class BadgeAssetProvider {
       if (response.ok) {
         this.lastFetchTime = now;
       }
-    } catch { }
+    } catch {}
   }
 
   static async getAssetHash(badgeKey: string): Promise<string | null> {
@@ -182,7 +183,7 @@ class BadgeManager {
 
   static async getCurrentNitro(months: number, nitroSinceDate: dayjs.Dayjs | null, response: any) {
     if (!nitroSinceDate) return { badge: null, icon_url: null, currentBadgeDate: null };
-
+    
     const range = this.findRange(NITRO_RANGES, months);
     const rawBadges = response?.badges || response?.user_profile?.badges || [];
     const foundBadge = rawBadges.find((b: any) => {
@@ -339,7 +340,7 @@ async function getUserActivity(userId: string) {
                 largeImage_url: getAssetUrl(largeAssetId),
                 largeText: activity.assets?.largeText || null,
                 smallImage_url: getAssetUrl(smallAssetId),
-                smallText: activity.assets?.smallText || null,
+                smallText: activity.assets?.smallText || null, 
               };
             } else {
               activityInfo = {
@@ -528,7 +529,7 @@ async function getUserResponse(response: any) {
     .filter((date) => date !== null && date !== undefined);
 
   const hasBoost = !!premiumSinceDate;
-
+  
   await getUserBadges(response);
 
   const currentBoostData = await BadgeManager.getCurrentBoost(monthsPassedBoost, hasBoost, response);
@@ -559,6 +560,21 @@ async function getUserResponse(response: any) {
   }
 
   const hypesquadHouseName = hypesquadHouseId ? HYPE_SQUAD_MAP[hypesquadHouseId] : null;
+
+  const avatarDecorationSource = response?.user_profile?.avatar_decoration_data || response?.avatar_decoration_data || memberInstance?.avatarDecorationData || null;
+  let avatarDecorationData: any = null;
+
+  if (avatarDecorationSource) {
+    const asset = avatarDecorationSource.asset;
+    if (asset) {
+      const extension = asset.startsWith("a_") ? ".gif" : ".png";
+      avatarDecorationData = {
+        asset: asset,
+        sku_id: avatarDecorationSource.sku_id || null,
+        url: `https://cdn.discordapp.com/avatar-decoration-presets/${asset}${extension}`
+      };
+    }
+  }
 
   const clanIdentitySource = response?.primary_guild || response?.clan || response?.user_profile?.primary_guild || response?.user_profile?.clan || null;
   let clanIdentityData: any = null;
@@ -612,6 +628,7 @@ async function getUserResponse(response: any) {
       avatar_url: target.displayAvatarURL ? target.displayAvatarURL({ size: 4096, extension: "png", dynamic: true }) : `https://cdn.discordapp.com/avatars/${userSource.id}/${userSource.avatar}.png?size=4096`,
       banner: userSource.banner,
       banner_url: bannerUrl,
+      avatar_decoration_data: avatarDecorationData,
     },
     user_profile: {
       bio: response?.user_profile?.bio || null,
@@ -684,4 +701,4 @@ const getDiscordProfileHandler: RequestHandler = async (req: Request, res: Respo
 };
 
 app.get("/api/discord/:userId?", getDiscordProfileHandler);
-app.listen(PORT, () => { });
+app.listen(PORT, () => {});

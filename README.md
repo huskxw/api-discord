@@ -83,7 +83,7 @@ GET /api/discord/:userId
 Exemplo:
 
 ```
-http://localhost:3001/api/discord/123456789012345678
+http://localhost:3001/api/discord/$ID
 ```
 
 Caso nenhum ID seja informado, será utilizado o usuário definido no arquivo `.env`.

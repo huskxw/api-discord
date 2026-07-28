@@ -237,11 +237,8 @@ Exemplo:
 
 ```env
 VITE_DISCORD_BOT_TOKEN=SEU_BOT_TOKEN
-
 DISCORD_USER_TOKEN=SEU_USER_TOKEN
-
 VITE_DISCORD_ID=ID_DO_USUARIO
-
 VITE_DISCORD_SERVER_ID=ID_DO_SERVIDOR
 ```
 
@@ -352,45 +349,25 @@ http://localhost:3001
 # 🦇 Recursos
 
 ✅ Perfil completo
-
 ✅ Avatar
-
 ✅ Banner
-
 ✅ Presence
-
 ✅ Activities
-
 ✅ Spotify
-
 ✅ VS Code
-
 ✅ Rich Presence
-
 ✅ Nitro
-
 ✅ Server Boost
-
 ✅ Badges
-
 ✅ Connected Accounts
-
 ✅ Clan Identity
-
 ✅ HypeSquad
-
 ✅ Theme Colors
-
 ✅ Bio
-
 ✅ Pronouns
-
 ✅ Cache
-
 ✅ TypeScript
-
 ✅ Express
-
 ✅ Discord.js
 
 ---

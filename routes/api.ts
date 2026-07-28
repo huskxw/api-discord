@@ -30,8 +30,10 @@ const client = new Client({
 });
 
 if (DISCORD_BOT_TOKEN) {
-  client.login(DISCORD_BOT_TOKEN).catch(() => {});
+  client.login(DISCORD_BOT_TOKEN).catch(() => { });
 }
+
+const lastSpotifyCache = new Map<string, any>();
 
 interface BadgeRange {
   badge: string;
@@ -122,7 +124,7 @@ class DiscordProfileService {
         CacheService.set(cacheKey, data, 1000 * 60 * 5);
         return data;
       }
-    } catch {}
+    } catch { }
 
     return null;
   }
@@ -144,7 +146,7 @@ class BadgeAssetProvider {
       if (response.ok) {
         this.lastFetchTime = now;
       }
-    } catch {}
+    } catch { }
   }
 
   static async getAssetHash(badgeKey: string): Promise<string | null> {
@@ -180,7 +182,7 @@ class BadgeManager {
 
   static async getCurrentNitro(months: number, nitroSinceDate: dayjs.Dayjs | null, response: any) {
     if (!nitroSinceDate) return { badge: null, icon_url: null, currentBadgeDate: null };
-    
+
     const range = this.findRange(NITRO_RANGES, months);
     const rawBadges = response?.badges || response?.user_profile?.badges || [];
     const foundBadge = rawBadges.find((b: any) => {
@@ -294,99 +296,144 @@ async function getUserActivity(userId: string) {
     const member = await guild.members.fetch({ user: userId, withPresences: true });
     const presence = member.presence;
 
-    if (!presence || !presence.activities || presence.activities.length === 0) return [];
-
     const activitiesList: any[] = [];
+    let foundSpotify = false;
 
-    for (const activity of presence.activities) {
-      if (!activity) continue;
+    if (presence && presence.activities) {
+      for (const activity of presence.activities) {
+        if (!activity) continue;
 
-      const appId = activity.applicationId;
-      const largeAssetId = activity.assets?.largeImage;
-      const smallAssetId = activity.assets?.smallImage;
+        const appId = activity.applicationId;
+        const largeAssetId = activity.assets?.largeImage;
+        const smallAssetId = activity.assets?.smallImage;
 
-      const getAssetUrl = (id: string | undefined | null) => {
-        if (!id) return null;
-        if (id.startsWith('spotify:')) return null;
-        if (id.startsWith('mp:external/')) {
-          return `https://media.discordapp.net/${id.replace('mp:external/', '')}`;
-        }
-        if (appId) {
-          return `https://cdn.discordapp.com/app-assets/${appId}/${id}.png`;
-        }
-        return null;
-      };
-
-      const start = activity.timestamps?.start ? new Date(activity.timestamps.start).getTime() : null;
-      const end = activity.timestamps?.end ? new Date(activity.timestamps.end).getTime() : null;
-
-      let activityInfo: any = {};
-
-      switch (activity.type) {
-        case ActivityType.Playing: {
-          const isVSCode = activity.name.includes("Visual Studio Code") || appId === "635032049339316224";
-
-          if (isVSCode) {
-            activityInfo = {
-              type: "VS Code",
-              name: activity.name,
-              pasta_workspace: activity.details || null,
-              linguagem_status: activity.state || null,
-              startTimestamp: start,
-              endTimestamp: end,
-              largeImage_url: getAssetUrl(largeAssetId),
-              largeText: activity.assets?.largeText || null,
-              smallImage_url: getAssetUrl(smallAssetId),
-              smallText: activity.assets?.smallText || null, 
-            };
-          } else {
-            activityInfo = {
-              type: "Jogando",
-              name: activity.name,
-              details: activity.details || null,
-              state: activity.state || null,
-              startTimestamp: start,
-              endTimestamp: end,
-              largeImage_url: getAssetUrl(largeAssetId),
-              largeText: activity.assets?.largeText || null,
-              smallImage_url: getAssetUrl(smallAssetId),
-              smallText: activity.assets?.smallText || null,
-              applicationId: appId || null,
-            };
+        const getAssetUrl = (id: string | undefined | null) => {
+          if (!id) return null;
+          if (id.startsWith('spotify:')) return null;
+          if (id.startsWith('mp:external/')) {
+            return `https://media.discordapp.net/${id.replace('mp:external/', '')}`;
           }
-          break;
-        }
+          if (appId) {
+            return `https://cdn.discordapp.com/app-assets/${appId}/${id}.png`;
+          }
+          return null;
+        };
 
-        case ActivityType.Listening: {
-          if (activity.name === "Spotify") {
-            const spotifyAssetIdCleaned = largeAssetId?.startsWith('spotify:') ? largeAssetId.replace("spotify:", "") : largeAssetId;
-            const spotifyAlbumArtUrl = spotifyAssetIdCleaned
-              ? `https://i.scdn.co/image/${spotifyAssetIdCleaned}`
-              : null;
+        const start = activity.timestamps?.start ? new Date(activity.timestamps.start).getTime() : null;
+        const end = activity.timestamps?.end ? new Date(activity.timestamps.end).getTime() : null;
 
-            let artists: string[] | null = null;
-            if (activity.state) {
-              if (activity.state.includes('; ')) {
-                artists = activity.state.split('; ').map((a: string) => a.trim());
-              } else if (activity.state.includes(', ')) {
-                artists = activity.state.split(', ').map((a: string) => a.trim());
-              } else {
-                artists = [activity.state.trim()];
-              }
+        let activityInfo: any = {};
+
+        switch (activity.type) {
+          case ActivityType.Playing: {
+            const isActivity = activity.name.includes("Visual Studio Code") || appId === "635032049339316224";
+
+            if (isActivity) {
+              activityInfo = {
+                type: "Activity",
+                name: activity.name,
+                pasta_workspace: activity.details || null,
+                linguagem_status: activity.state || null,
+                startTimestamp: start,
+                endTimestamp: end,
+                largeImage_url: getAssetUrl(largeAssetId),
+                largeText: activity.assets?.largeText || null,
+                smallImage_url: getAssetUrl(smallAssetId),
+                smallText: activity.assets?.smallText || null,
+              };
+            } else {
+              activityInfo = {
+                type: "Playing",
+                name: activity.name,
+                details: activity.details || null,
+                state: activity.state || null,
+                startTimestamp: start,
+                endTimestamp: end,
+                largeImage_url: getAssetUrl(largeAssetId),
+                largeText: activity.assets?.largeText || null,
+                smallImage_url: getAssetUrl(smallAssetId),
+                smallText: activity.assets?.smallText || null,
+                applicationId: appId || null,
+              };
             }
+            break;
+          }
 
+          case ActivityType.Listening: {
+            if (activity.name === "Spotify") {
+              foundSpotify = true;
+              const spotifyAssetIdCleaned = largeAssetId?.startsWith('spotify:') ? largeAssetId.replace("spotify:", "") : largeAssetId;
+              const spotifyAlbumArtUrl = spotifyAssetIdCleaned
+                ? `https://i.scdn.co/image/${spotifyAssetIdCleaned}`
+                : null;
+
+              let artists: string[] | null = null;
+              if (activity.state) {
+                if (activity.state.includes('; ')) {
+                  artists = activity.state.split('; ').map((a: string) => a.trim());
+                } else if (activity.state.includes(', ')) {
+                  artists = activity.state.split(', ').map((a: string) => a.trim());
+                } else {
+                  artists = [activity.state.trim()];
+                }
+              }
+
+              activityInfo = {
+                type: "Spotify",
+                musica: activity.details || null,
+                artista: artists,
+                album: activity.assets?.largeText || null,
+                albumArtUrl: spotifyAlbumArtUrl,
+                startTimestamp: start,
+                endTimestamp: end,
+                isPaused: false,
+              };
+
+              lastSpotifyCache.set(userId, activityInfo);
+            } else {
+              activityInfo = {
+                type: "Ouvindo",
+                name: activity.name,
+                details: activity.details || null,
+                startTimestamp: start,
+                endTimestamp: end,
+                largeImage_url: getAssetUrl(largeAssetId),
+                largeText: activity.assets?.largeText || null,
+                smallImage_url: getAssetUrl(smallAssetId),
+                smallText: activity.assets?.smallText || null,
+              };
+            }
+            break;
+          }
+
+          case ActivityType.Streaming: {
             activityInfo = {
-              type: "Spotify",
-              musica: activity.details || null,
-              artista: artists,
-              album: activity.assets?.largeText || null,
-              albumArtUrl: spotifyAlbumArtUrl,
+              type: "Streaming",
+              name: activity.name,
+              details: activity.details || null,
+              url: activity.url || null,
               startTimestamp: start,
               endTimestamp: end,
+              largeImage_url: getAssetUrl(largeAssetId),
+              largeText: activity.assets?.largeText || null,
+              smallImage_url: getAssetUrl(smallAssetId),
+              smallText: activity.assets?.smallText || null,
             };
-          } else {
+            break;
+          }
+
+          case ActivityType.Custom: {
             activityInfo = {
-              type: "Ouvindo",
+              type: "Status Custom",
+              state: activity.state || null,
+              emoji: activity.emoji?.name || null,
+            };
+            break;
+          }
+
+          default: {
+            activityInfo = {
+              type: activity.type,
               name: activity.name,
               details: activity.details || null,
               startTimestamp: start,
@@ -397,52 +444,19 @@ async function getUserActivity(userId: string) {
               smallText: activity.assets?.smallText || null,
             };
           }
-          break;
         }
 
-        case ActivityType.Streaming: {
-          activityInfo = {
-            type: "Transmitindo",
-            name: activity.name,
-            details: activity.details || null,
-            url: activity.url || null,
-            startTimestamp: start,
-            endTimestamp: end,
-            largeImage_url: getAssetUrl(largeAssetId),
-            largeText: activity.assets?.largeText || null,
-            smallImage_url: getAssetUrl(smallAssetId),
-            smallText: activity.assets?.smallText || null,
-          };
-          break;
-        }
-
-        case ActivityType.Custom: {
-          activityInfo = {
-            type: "Status Personalizado",
-            state: activity.state || null,
-            emoji: activity.emoji?.name || null,
-          };
-          break;
-        }
-
-        default: {
-          activityInfo = {
-            type: activity.type,
-            name: activity.name,
-            details: activity.details || null,
-            startTimestamp: start,
-            endTimestamp: end,
-            largeImage_url: getAssetUrl(largeAssetId),
-            largeText: activity.assets?.largeText || null,
-            smallImage_url: getAssetUrl(smallAssetId),
-            smallText: activity.assets?.smallText || null,
-          };
+        if (Object.keys(activityInfo).length > 0) {
+          activitiesList.push(activityInfo);
         }
       }
-
-      if (Object.keys(activityInfo).length > 0) {
-        activitiesList.push(activityInfo);
-      }
+    }
+    if (!foundSpotify && lastSpotifyCache.has(userId)) {
+      const cachedSpotify = lastSpotifyCache.get(userId);
+      activitiesList.push({
+        ...cachedSpotify,
+        isPaused: true
+      });
     }
 
     return activitiesList;
@@ -514,7 +528,7 @@ async function getUserResponse(response: any) {
     .filter((date) => date !== null && date !== undefined);
 
   const hasBoost = !!premiumSinceDate;
-  
+
   await getUserBadges(response);
 
   const currentBoostData = await BadgeManager.getCurrentBoost(monthsPassedBoost, hasBoost, response);
@@ -670,4 +684,4 @@ const getDiscordProfileHandler: RequestHandler = async (req: Request, res: Respo
 };
 
 app.get("/api/discord/:userId?", getDiscordProfileHandler);
-app.listen(PORT, () => {});
+app.listen(PORT, () => { });

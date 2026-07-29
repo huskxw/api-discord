@@ -25,13 +25,16 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildPresences,
-    GatewayIntentBits.GuildMembers
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildVoiceStates
   ]
 });
 
 if (DISCORD_BOT_TOKEN) {
   client.login(DISCORD_BOT_TOKEN).catch(() => {});
 }
+
+client.once("ready", () => {});
 
 const lastSpotifyCache = new Map<string, any>();
 
@@ -121,7 +124,6 @@ class DiscordProfileService {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("RESPOSTA COMPLETA DA API DO DISCORD (/profile):", JSON.stringify(data, null, 2));
         CacheService.set(cacheKey, data, 1000 * 60 * 5);
         return data;
       }
@@ -289,6 +291,53 @@ async function getUserBadges(response: any) {
     });
   }
   return [];
+}
+
+async function getUserVoiceState(userId: string) {
+  try {
+    if (!SERVER_ID) return { connected: false };
+    const guild = await client.guilds.fetch(SERVER_ID).catch(() => null);
+    if (!guild) return { connected: false };
+
+    const member = await guild.members.fetch({ user: userId, force: true }).catch(() => null);
+    if (!member || !member.voice || !member.voice.channel) {
+      return { connected: false };
+    }
+
+    const channel = member.voice.channel;
+    await channel.fetch().catch(() => {});
+    const membersInChannel = Array.from(channel.members.values());
+    const participantsCount = membersInChannel.length;
+
+    const participants = membersInChannel.map((m) => ({
+      id: m.user.id,
+      username: m.user.username,
+      global_name: m.user.globalName || m.user.username,
+      avatar: m.user.avatar,
+      avatar_url: m.user.displayAvatarURL({ size: 4096, extension: "png" }),
+      voice_state: {
+        self_mute: m.voice.selfMute || false,
+        self_deaf: m.voice.selfDeaf || false,
+        server_mute: m.voice.serverMute || false,
+        server_deaf: m.voice.serverDeaf || false,
+        streaming: m.voice.streaming || false,
+        self_video: m.voice.selfVideo || false,
+      }
+    }));
+
+    return {
+      connected: true,
+      channel: {
+        id: channel.id,
+        name: channel.name,
+        participants_count: participantsCount,
+        is_alone: participantsCount <= 1,
+      },
+      participants: participants
+    };
+  } catch {
+    return { connected: false };
+  }
 }
 
 async function getUserActivity(userId: string) {
@@ -547,6 +596,7 @@ async function getUserResponse(response: any) {
   const activity = await getUserActivity(userSource.id);
   const rawStatus = await getUserStatus(userSource.id);
   const statusDetails = STATUS_DETAILS_MAP[rawStatus] || STATUS_DETAILS_MAP.offline;
+  const voiceState = await getUserVoiceState(userSource.id);
 
   const previousUsernames = response?.previous_usernames || [];
   const previousDisplayNames = response?.previous_global_names || [];
@@ -625,7 +675,7 @@ async function getUserResponse(response: any) {
       discriminator: userSource.discriminator,
       flags: flagsValue,
       avatar: userSource.avatar,
-      avatar_url: target.displayAvatarURL ? target.displayAvatarURL({ size: 4096, extension: "png", dynamic: true }) : `https://cdn.discordapp.com/avatars/${userSource.id}/${userSource.avatar}.png?size=4096`,
+      avatar_url: target.displayAvatarURL ? target.displayAvatarURL({ size: 4096, extension: "png" }) : `https://cdn.discordapp.com/avatars/${userSource.id}/${userSource.avatar}.png?size=4096`,
       banner: userSource.banner,
       banner_url: bannerUrl,
       avatar_decoration_data: avatarDecorationData,
@@ -644,6 +694,7 @@ async function getUserResponse(response: any) {
       status_color: statusDetails.color,
       activities: activity,
     },
+    voice: voiceState,
     nitro: {
       premium_type:
         defaultPremiumType == 1

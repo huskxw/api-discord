@@ -52,6 +52,7 @@ src/
 │   ├── DiscordProfileService
 │   ├── BadgeManager
 │   ├── BadgeAssetProvider
+│   ├── UserVoice
 │   └── CacheService
 │
 ├── utils/
@@ -71,7 +72,7 @@ Cada classe possui uma responsabilidade específica.
 | 🦇 BadgeManager | Calcula Nitro, Boost e Badges |
 | 🦇 BadgeAssetProvider | Obtém automaticamente os Assets das Badges |
 | 🦇 CacheService | Armazena respostas temporariamente para diminuir requisições |
-
+| 🦇 UserVoice | Localiza que o usuário está em um canal de voz |
 ---
 
 # 🦇 Endpoint
@@ -365,6 +366,7 @@ http://localhost:3001
 ✅ Theme Colors
 ✅ Bio
 ✅ Pronouns
+✅ VoiceGuild
 ✅ Cache
 ✅ TypeScript
 ✅ Express

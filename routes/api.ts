@@ -133,6 +133,41 @@ class DiscordProfileService {
   }
 }
 
+class StatusService {
+  static async getActivePlatforms(userId: string) {
+    const defaultPlatforms = {
+      active_on_discord_web: false,
+      active_on_discord_desktop: false,
+      active_on_discord_mobile: false,
+      active_on_discord_embedded: false,
+      active_on_discord_vr: false,
+    };
+
+    try {
+      if (!SERVER_ID) return defaultPlatforms;
+      const guild = await client.guilds.fetch(SERVER_ID).catch(() => null);
+      if (!guild) return defaultPlatforms;
+
+      const member = await guild.members.fetch({ user: userId, withPresences: true }).catch(() => null);
+      if (!member || !member.presence || !member.presence.clientStatus) {
+        return defaultPlatforms;
+      }
+
+      const clientStatus = member.presence.clientStatus;
+
+      return {
+        active_on_discord_web: Boolean(clientStatus.web),
+        active_on_discord_desktop: Boolean(clientStatus.desktop),
+        active_on_discord_mobile: Boolean(clientStatus.mobile),
+        active_on_discord_embedded: Boolean((clientStatus as any).embedded),
+        active_on_discord_vr: Boolean((clientStatus as any).vr),
+      };
+    } catch {
+      return defaultPlatforms;
+    }
+  }
+}
+
 class BadgeAssetProvider {
   private static assetMap: Map<string, string> = new Map();
   private static lastFetchTime: number = 0;
@@ -597,6 +632,7 @@ async function getUserResponse(response: any) {
   const rawStatus = await getUserStatus(userSource.id);
   const statusDetails = STATUS_DETAILS_MAP[rawStatus] || STATUS_DETAILS_MAP.offline;
   const voiceState = await getUserVoiceState(userSource.id);
+  const activePlatforms = await StatusService.getActivePlatforms(userSource.id);
 
   const previousUsernames = response?.previous_usernames || [];
   const previousDisplayNames = response?.previous_global_names || [];
@@ -694,6 +730,7 @@ async function getUserResponse(response: any) {
       status_color: statusDetails.color,
       activities: activity,
     },
+    ...activePlatforms,
     voice: voiceState,
     nitro: {
       premium_type:

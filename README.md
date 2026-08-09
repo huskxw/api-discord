@@ -31,7 +31,7 @@ Toda a aplicação foi desenvolvida em **TypeScript**, trazendo uma estrutura or
 
 # 🦇 Tecnologias
 
-<div align="left">
+<div align="center">
 
 <img src="https://skillicons.dev/icons?i=ts" height="50"/>
 <img src="https://skillicons.dev/icons?i=nodejs" height="50"/>
@@ -41,6 +41,9 @@ Toda a aplicação foi desenvolvida em **TypeScript**, trazendo uma estrutura or
 <img src="https://skillicons.dev/icons?i=dayjs" height="50"/>
 <img src="https://skillicons.dev/icons?i=dotenv" height="50"/>
 <img src="https://skillicons.dev/icons?i=cors" height="50"/>
+
+</div>
+
 
 
 ---

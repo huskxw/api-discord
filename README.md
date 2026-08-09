@@ -1,21 +1,8 @@
-<div align="center">
-
 # 🦇 Discord Profile API
-
-<img src="https://skillicons.dev/icons?i=ts,nodejs,express" height="80"/>
 
 ### Uma API desenvolvida em **TypeScript** para obter informações completas de perfis do Discord.
 
-Ela reúne dados do usuário, Nitro, Boost, Presence, Activities, Badges, Clan Identity, Spotify, VS Code, Contas Conectadas e muito mais em um único endpoint.
-
----
-
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![NodeJS](https://img.shields.io/badge/Node.js-22.x-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![Express](https://img.shields.io/badge/Express-API-black?style=for-the-badge&logo=express)
-![Discord](https://img.shields.io/badge/Discord-API-5865F2?style=for-the-badge&logo=discord&logoColor=white)
-
-</div>
+Ela reúne dados do usuário, Nitro, Boost, Presence, Activities, Badges, Clan Identity, Spotify, VS Code, Contas Conectadas e agora também identifica **em qual plataforma do Discord o usuário está conectado**, tudo em um único endpoint.
 
 ---
 
@@ -31,20 +18,20 @@ Toda a aplicação foi desenvolvida em **TypeScript**, trazendo uma estrutura ma
 
 # 🦇 Tecnologias
 
-- ⚡ TypeScript
-- ⚡ Node.js
-- ⚡ Express
-- ⚡ Discord.js
-- ⚡ Discord API
-- ⚡ DayJS
-- ⚡ Dotenv
-- ⚡ CORS
+* ⚡ TypeScript
+* ⚡ Node.js
+* ⚡ Express
+* ⚡ Discord.js
+* ⚡ Discord API
+* ⚡ DayJS
+* ⚡ Dotenv
+* ⚡ CORS
 
 ---
 
 # 🦇 Estrutura da API
 
-```
+```text
 src/
 │
 ├── server.ts
@@ -66,24 +53,23 @@ src/
 
 Cada classe possui uma responsabilidade específica.
 
-| Classe | Responsabilidade |
-|---------|------------------|
-| 🦇 DiscordProfileService | Busca o perfil diretamente na API do Discord |
-| 🦇 BadgeManager | Calcula Nitro, Boost e Badges |
-| 🦇 BadgeAssetProvider | Obtém automaticamente os Assets das Badges |
-| 🦇 CacheService | Armazena respostas temporariamente para diminuir requisições |
-| 🦇 UserVoice | Localiza que o usuário está em um canal de voz |
+| Classe                   | Responsabilidade                                             |
+| ------------------------ | ------------------------------------------------------------ |
+| 🦇 DiscordProfileService | Busca o perfil diretamente na API do Discord                 |
+| 🦇 BadgeManager          | Calcula Nitro, Boost e Badges                                |
+| 🦇 BadgeAssetProvider    | Obtém automaticamente os Assets das Badges                   |
+| 🦇 CacheService          | Armazena respostas temporariamente para diminuir requisições |
+| 🦇 UserVoice             | Localiza se o usuário está em um canal de voz                |
+
 ---
 
 # 🦇 Endpoint
 
-```
+```text
 GET /api/discord/:userId
 ```
 
-Exemplo:
-
-```
+```text
 http://localhost:3001/api/discord/$ID
 ```
 
@@ -97,25 +83,55 @@ A resposta contém diversas informações organizadas.
 
 ## 👤 Usuário
 
-- ID
-- Username
-- Global Name
-- Avatar
-- Banner
-- Flags
-- Datas de criação
-- Histórico de usernames
+* ID
+* Username
+* Global Name
+* Avatar
+* Banner
+* Flags
+* Datas de criação
+* Histórico de usernames
 
 ---
 
 ## 🦇 Presence
 
-- Online
-- Idle
-- DND
-- Offline
-- Cor do status
-- Nome do status
+A API identifica o status atual do usuário:
+
+* Online
+* Idle
+* DND
+* Offline
+* Cor do status
+* Nome do status
+
+---
+
+## 🖥️ Status de Conexão
+
+A API também identifica **onde a conta do Discord está conectada no momento**.
+
+Essa informação é independente do status Online, Idle, DND ou Offline e também não possui relação com canais de voz ou chamadas.
+
+A API identifica as plataformas de conexão disponíveis para a conta:
+
+* Discord Web
+* Discord Desktop
+* Discord Mobile
+* Discord Embedded
+* Discord VR
+
+Cada plataforma é retornada individualmente como um valor booleano, permitindo identificar quais sessões estão ativas naquele momento.
+
+Isso permite saber, por exemplo, se o usuário está utilizando o Discord pelo:
+
+* 🌐 Navegador
+* 🖥️ Aplicativo Desktop
+* 📱 Aplicativo Mobile
+* 🔲 Aplicação Embedded
+* 🥽 VR
+
+O sistema mantém essas informações separadas do `Presence` e do sistema de Voice Chat.
 
 ---
 
@@ -123,23 +139,23 @@ A resposta contém diversas informações organizadas.
 
 A API identifica automaticamente:
 
-- VS Code
-- Spotify
-- Jogos
-- Streaming
-- Custom Status
-- Rich Presence
+* VS Code
+* Spotify
+* Jogos
+* Streaming
+* Custom Status
+* Rich Presence
 
 Incluindo:
 
-- imagens
-- timestamps
-- detalhes
-- workspace
-- linguagem
-- música
-- artista
-- álbum
+* imagens
+* timestamps
+* detalhes
+* workspace
+* linguagem
+* música
+* artista
+* álbum
 
 ---
 
@@ -147,11 +163,11 @@ Incluindo:
 
 A API calcula automaticamente:
 
-- Tipo do Nitro
-- Data de início
-- Badge atual
-- Próxima Badge
-- Data da próxima Badge
+* Tipo do Nitro
+* Data de início
+* Badge atual
+* Próxima Badge
+* Data da próxima Badge
 
 Sem necessidade de manter hashes fixos no código.
 
@@ -161,18 +177,16 @@ Sem necessidade de manter hashes fixos no código.
 
 Também calcula automaticamente:
 
-- Boost atual
-- Próximo nível
-- Datas
-- Evolução do Boost
+* Boost atual
+* Próximo nível
+* Datas
+* Evolução do Boost
 
 ---
 
 ## 🏅 Badges
 
 A API retorna todas as badges disponíveis no perfil do usuário.
-
-Exemplo:
 
 ```json
 [
@@ -190,11 +204,11 @@ Exemplo:
 
 Caso exista, retorna:
 
-- Guild
-- Nome
-- TAG
-- Badge
-- Guild ID
+* Guild
+* Nome
+* TAG
+* Badge
+* Guild ID
 
 ---
 
@@ -202,15 +216,33 @@ Caso exista, retorna:
 
 Também retorna:
 
-- GitHub
-- Steam
-- Xbox
-- Spotify
-- Twitch
-- Reddit
-- Twitter/X
+* GitHub
+* Steam
+* Xbox
+* Spotify
+* Twitch
+* Reddit
+* Twitter/X
 
 e qualquer outra conta conectada ao perfil.
+
+---
+
+## 🎙️ Voice
+
+Além do status de conexão da conta, a API possui um sistema separado para identificar informações de Voice Chat.
+
+O sistema pode identificar:
+
+* Se o usuário está conectado a um canal de voz
+* Canal atual
+* ID do canal
+* Nome do canal
+* Quantidade de participantes
+* Participantes conectados
+* Estado de voz dos participantes
+
+O sistema de Voice é completamente separado do sistema de **Status de Conexão**, evitando misturar informações de plataforma com informações de canal de voz.
 
 ---
 
@@ -222,9 +254,9 @@ Isso evita realizar centenas de chamadas iguais para o Discord.
 
 Benefícios:
 
-- ⚡ Mais velocidade
-- ⚡ Menos consumo de API
-- ⚡ Menos rate limit
+* ⚡ Mais velocidade
+* ⚡ Menos consumo de API
+* ⚡ Menos rate limit
 
 ---
 
@@ -233,8 +265,6 @@ Benefícios:
 Toda informação sensível fica armazenada no arquivo `.env`.
 
 Isso evita expor tokens diretamente no código.
-
-Exemplo:
 
 ```env
 VITE_DISCORD_BOT_TOKEN=SEU_BOT_TOKEN
@@ -253,12 +283,13 @@ Token do Bot.
 
 É utilizado pelo Discord.js para obter:
 
-- Presence
-- Activities
-- Guild
-- Member
-- Status
-- Informações do servidor
+* Presence
+* Activities
+* Guild
+* Member
+* Status
+* Informações do servidor
+* Informações de Voice
 
 ---
 
@@ -268,7 +299,7 @@ Token da conta do Discord.
 
 É utilizado para acessar o endpoint:
 
-```
+```text
 /users/:id/profile
 ```
 
@@ -276,16 +307,16 @@ Esse endpoint retorna muito mais informações que um Bot consegue obter.
 
 Com ele é possível acessar automaticamente:
 
-- Badges
-- Nitro
-- Premium Since
-- Boost Since
-- User Profile
-- Clan Identity
-- Theme Colors
-- Pronouns
-- Connected Accounts
-- Bio
+* Badges
+* Nitro
+* Premium Since
+* Boost Since
+* User Profile
+* Clan Identity
+* Theme Colors
+* Pronouns
+* Connected Accounts
+* Bio
 
 Além disso, os assets das badges são obtidos dinamicamente, sem precisar salvar hashes manualmente no código.
 
@@ -299,12 +330,13 @@ Usuário padrão utilizado quando nenhum ID é enviado na rota.
 
 ## 🔹 VITE_DISCORD_SERVER_ID
 
-Servidor utilizado pelo Discord.js para buscar:
+Servidor utilizado pelo Discord.js para buscar informações relacionadas ao servidor e ao usuário, incluindo:
 
-- Presence
-- Activities
-- Boost
-- Member
+* Presence
+* Activities
+* Boost
+* Member
+* Voice
 
 ---
 
@@ -326,7 +358,7 @@ npm run dev
 
 A API ficará disponível em:
 
-```
+```text
 http://localhost:3001
 ```
 
@@ -338,6 +370,8 @@ http://localhost:3001
 {
    "user":{},
    "presence":{},
+   "connection_status":{},
+   "voice":{},
    "nitro":{},
    "boost":{},
    "badges":[],
@@ -353,6 +387,12 @@ http://localhost:3001
 ✅ Avatar
 ✅ Banner
 ✅ Presence
+✅ Status de conexão
+✅ Discord Web
+✅ Discord Desktop
+✅ Discord Mobile
+✅ Discord Embedded
+✅ Discord VR
 ✅ Activities
 ✅ Spotify
 ✅ VS Code
@@ -367,6 +407,8 @@ http://localhost:3001
 ✅ Bio
 ✅ Pronouns
 ✅ VoiceGuild
+✅ Voice Chat
+✅ Participantes da Call
 ✅ Cache
 ✅ TypeScript
 ✅ Express
@@ -374,10 +416,6 @@ http://localhost:3001
 
 ---
 
-<div align="center">
-
 # 🦇 Desenvolvido em TypeScript
 
-Uma API moderna construída com **Node.js + Express + TypeScript**, focada em fornecer informações completas do perfil do Discord em um único endpoint, com código organizado, tipagem forte, cache inteligente e integração direta com a Discord API.
-
-</div>
+Uma API moderna construída com **Node.js + Express + TypeScript**, focada em fornecer informações completas do perfil do Discord em um único endpoint, incluindo perfil, presença, atividades, status de conexão da conta, informações de Voice Chat, Nitro, Boost, Badges e diversas outras informações disponibilizadas pelo Discord.

@@ -33,21 +33,15 @@ Toda a aplicação foi desenvolvida em **TypeScript**, trazendo uma estrutura or
 
 <div align="left">
 
-<img src="https://skillicons.dev/icons?i=ts" height="45"/>
-<img src="https://skillicons.dev/icons?i=nodejs" height="45"/>
-<img src="https://skillicons.dev/icons?i=express" height="45"/>
-<img src="https://skillicons.dev/icons?i=discordjs" height="45"/>
+<img src="https://skillicons.dev/icons?i=ts" height="50"/>
+<img src="https://skillicons.dev/icons?i=nodejs" height="50"/>
+<img src="https://skillicons.dev/icons?i=express" height="50"/>
+<img src="https://skillicons.dev/icons?i=discordjs" height="50"/>
+<img src="https://skillicons.dev/icons?i=discord" height="50"/>
+<img src="https://skillicons.dev/icons?i=dayjs" height="50"/>
+<img src="https://skillicons.dev/icons?i=dotenv" height="50"/>
+<img src="https://skillicons.dev/icons?i=cors" height="50"/>
 
-</div>
-
-* ⚡ TypeScript
-* ⚡ Node.js
-* ⚡ Express
-* ⚡ Discord.js
-* ⚡ Discord API
-* ⚡ DayJS
-* ⚡ Dotenv
-* ⚡ CORS
 
 ---
 

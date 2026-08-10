@@ -22,6 +22,8 @@ User data, Nitro, Boost, Presence, Activities, Connection Status, Badges, Clan I
 
 # About
 
+</div>
+
 The **Discord Profile API** makes it easy to retrieve nearly all available information about a Discord user’s profile.
 
 Instead of calling multiple Discord endpoints yourself, this API centralizes everything into one clean, structured JSON response.
@@ -33,6 +35,8 @@ Built entirely in **TypeScript** for a clear architecture, strong typing, and ea
 <div align="center">
 
 # API Structure
+
+</div>
 
 </div>
 

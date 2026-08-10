@@ -475,6 +475,7 @@ connected_accounts
 
 </td>
 <td width="50%">
+---
 
 ### API
 
@@ -488,10 +489,11 @@ connected_accounts
 </td>
 </tr>
 </table>
+
 ---
 
-#  Desenvolvido em TypeScript
+# Built with TypeScript
 
-Uma API moderna construída com **Node.js + Express + TypeScript**, focada em fornecer informações completas do perfil do Discord em um único endpoint.
+A modern API built with **Node.js + Express + TypeScript**, focused on providing complete Discord profile information through a single endpoint.
 
-**Organizada • Tipada • Rápida • Completa**
+**Organized • Typed • Fast • Complete**

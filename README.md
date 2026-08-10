@@ -368,18 +368,31 @@ npm run dev
 A API ficará disponível em:
 
 ```text
+The API will be available at:
 http://localhost:3001
 ```
 
 ---
 
-# 📸 Preview
+# Preview
 
-A API retorna todas as informações organizadas em uma única resposta JSON.
+The API returns all profile information organized into a single JSON response.
+
+<div align="center">
+
+<table> <tr> <td align="center">
+
+<img src="docs/assets/card-preview.png" alt="API JSON Preview" width="500">
+
+</td> </tr> </table>
+
+</div>
+
+The main response structure is divided into:
 
 ![Preview do JSON da API](docs/assets/card-preview.png)
 
-A estrutura principal da resposta é dividida em:
+
 
 ```
 

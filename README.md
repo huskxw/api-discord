@@ -59,12 +59,12 @@ Cada classe possui uma responsabilidade específica.
 
 | Classe | Responsabilidade |
 | --- | --- |
-| 🦇 DiscordProfileService | Busca o perfil diretamente na API do Discord |
-| 🦇 BadgeManager | Calcula Nitro, Boost e Badges |
-| 🦇 BadgeAssetProvider | Obtém automaticamente os Assets das Badges |
-| 🦇 UserStatus | Identifica o status e onde o usuário está conectado |
-| 🦇 UserVoice | Localiza se o usuário está conectado a um canal de voz |
-| 🦇 CacheService | Armazena respostas temporariamente para diminuir requisições |
+|  DiscordProfileService | Busca o perfil diretamente na API do Discord |
+|  BadgeManager | Calcula Nitro, Boost e Badges |
+|  BadgeAssetProvider | Obtém automaticamente os Assets das Badges |
+|  UserStatus | Identifica o status e onde o usuário está conectado |
+|  UserVoice | Localiza se o usuário está conectado a um canal de voz |
+|  CacheService | Armazena respostas temporariamente para diminuir requisições |
 
 ---
 
@@ -103,10 +103,10 @@ A resposta contém diversas informações organizadas sobre o usuário.
 
 A API identifica automaticamente o estado atual do usuário.
 
-- 🟢 Online
-- 🟡 Idle
-- 🔴 DND
-- ⚫ Offline
+-  Online
+-  Idle
+-  DND
+-  Offline
 
 Também retorna:
 
@@ -124,11 +124,11 @@ A API também identifica **onde o usuário está conectado ao Discord**, separad
 
 O status de conexão informa se o usuário está utilizando:
 
-- 🌐 Discord Web
-- 💻 Discord Desktop
-- 📱 Discord Mobile
-- 🧩 Discord Embedded
-- 🥽 Discord VR
+-  Discord Web
+-  Discord Desktop
+-  Discord Mobile
+-  Discord Embedded
+-  Discord VR
 
 Essas informações permitem identificar em quais plataformas o usuário está ativo no momento.
 
@@ -146,7 +146,7 @@ O sistema de status de conexão é independente do sistema de voz. Estar conecta
 
 ---
 
-## 🎮 Activities
+##  Activities
 
 A API identifica automaticamente diferentes tipos de atividades.
 
@@ -274,10 +274,10 @@ Isso evita realizar chamadas repetidas desnecessariamente para o Discord.
 
 Benefícios:
 
-- ⚡ Mais velocidade
-- ⚡ Menor consumo da API
-- ⚡ Menor quantidade de requisições
-- ⚡ Menor possibilidade de atingir rate limits
+-  Mais velocidade
+-  Menor consumo da API
+-  Menor quantidade de requisições
+-  Menor possibilidade de atingir rate limits
 
 ---
 
@@ -349,7 +349,7 @@ Define o servidor utilizado pelo Discord.js para obter informações relacionada
 
 ---
 
-# 🦇 Como executar
+#  Como executar
 
 Instale as dependências:
 
@@ -388,9 +388,7 @@ The main response structure is divided into:
 
 
 
-```
-
-text
+```text
 user
 user_profile
 clan_identity
@@ -492,7 +490,7 @@ connected_accounts
 </table>
 ---
 
-# 🦇 Desenvolvido em TypeScript
+#  Desenvolvido em TypeScript
 
 Uma API moderna construída com **Node.js + Express + TypeScript**, focada em fornecer informações completas do perfil do Discord em um único endpoint.
 

@@ -396,38 +396,91 @@ connected_accounts
 
 # Recursos
 
-- ✅ Perfil completo
-- ✅ Avatar
-- ✅ Banner
-- ✅ Avatar Decoration
-- ✅ Presence
-- ✅ Status
-- ✅ Status de conexão
-- ✅ Discord Web
-- ✅ Discord Desktop
-- ✅ Discord Mobile
-- ✅ Discord Embedded
-- ✅ Discord VR
-- ✅ Activities
-- ✅ Spotify
-- ✅ VS Code
-- ✅ Rich Presence
-- ✅ Nitro
-- ✅ Server Boost
-- ✅ Badges
-- ✅ Connected Accounts
-- ✅ Clan Identity
-- ✅ HypeSquad
-- ✅ Theme Colors
-- ✅ Bio
-- ✅ Pronouns
-- ✅ Voice State
-- ✅ Voice Participants
-- ✅ Cache
-- ✅ TypeScript
-- ✅ Express
-- ✅ Discord.js
+## Features
 
+<table>
+<tr>
+<td width="50%">
+
+### Profile
+
+- Full Profile
+- Avatar
+- Banner
+- Avatar Decoration
+- Bio
+- Pronouns
+- Theme Colors
+
+</td>
+<td width="50%">
+
+### Presence
+
+- Presence
+- Status
+- Connection Status
+- Activities
+- Rich Presence
+- Spotify
+- VS Code
+
+</td>
+</tr>
+
+<tr>
+<td width="50%">
+
+### Discord
+
+- Discord Web
+- Discord Desktop
+- Discord Mobile
+- Discord Embedded
+- Discord VR
+- Nitro
+- Server Boost
+- Badges
+- HypeSquad
+
+</td>
+<td width="50%">
+
+### Account
+
+- Connected Accounts
+- Clan Identity
+- Voice State
+- Voice Participants
+- Cache
+
+</td>
+</tr>
+
+<tr>
+<td width="50%">
+
+### Technology
+
+- TypeScript
+- Express
+- Discord.js
+
+</td>
+<td width="50%">
+
+### API
+
+- Real-time Profile Data
+- Discord Presence Data
+- Activity Detection
+- Voice State Detection
+- Badge Detection
+- Cached Responses
+
+</td>
+</tr>
+</table>
 ---
 
 # 🦇 Desenvolvido em TypeScript

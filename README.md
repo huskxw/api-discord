@@ -6,7 +6,7 @@ Ela reúne dados do usuário, Nitro, Boost, Presence, Activities, Status de cone
 
 ---
 
-# 🦇 Sobre
+#  Sobre
 
 A **Discord Profile API** foi criada para facilitar a obtenção de praticamente todas as informações disponíveis sobre o perfil de um usuário do Discord.
 
@@ -30,7 +30,7 @@ Toda a aplicação foi desenvolvida em **TypeScript**, trazendo uma estrutura or
 
 ---
 
-# 🦇 Estrutura da API
+#  Estrutura da API
 
 ```text
 src/
@@ -67,7 +67,7 @@ Cada classe possui uma responsabilidade específica.
 
 ---
 
-# 🦇 Endpoint
+#  Endpoint
 
 ```text
 GET /api/discord/:userId
@@ -77,13 +77,13 @@ Caso nenhum ID seja informado, será utilizado o usuário definido no arquivo `.
 
 ---
 
-# 🦇 O que a API retorna?
+#  O que a API retorna?
 
 A resposta contém diversas informações organizadas sobre o usuário.
 
 ---
 
-## 👤 Usuário
+##  Usuário
 
 - ID
 - Username
@@ -98,7 +98,7 @@ A resposta contém diversas informações organizadas sobre o usuário.
 
 ---
 
-## 🟢 Presence
+## Presence
 
 A API identifica automaticamente o estado atual do usuário.
 
@@ -117,7 +117,7 @@ Também retorna:
 
 ---
 
-## 📱 Status de conexão
+##  Status de conexão
 
 A API também identifica **onde o usuário está conectado ao Discord**, separadamente do sistema de voz.
 
@@ -149,12 +149,12 @@ O sistema de status de conexão é independente do sistema de voz. Estar conecta
 
 A API identifica automaticamente diferentes tipos de atividades.
 
-- 💻 VS Code
-- 🎵 Spotify
-- 🎮 Jogos
-- 📺 Streaming
-- ✏️ Custom Status
-- ⚡ Rich Presence
+-  VS Code
+-  Spotify
+-  Jogos
+-  Streaming
+-  Custom Status
+-  Rich Presence
 
 As atividades podem incluir:
 
@@ -171,7 +171,7 @@ As atividades podem incluir:
 
 ---
 
-## 💎 Nitro
+##  Nitro
 
 A API calcula automaticamente informações relacionadas ao Nitro.
 
@@ -187,7 +187,7 @@ Os assets das badges são obtidos dinamicamente.
 
 ---
 
-## 🚀 Server Boost
+##  Server Boost
 
 Também calcula automaticamente:
 
@@ -200,7 +200,7 @@ Também calcula automaticamente:
 
 ---
 
-## 🏅 Badges
+##  Badges
 
 A API retorna as badges disponíveis no perfil do usuário.
 
@@ -213,7 +213,7 @@ Cada badge pode conter:
 
 ---
 
-## 👥 Clan Identity
+##  Clan Identity
 
 Caso o usuário possua uma identidade de clan, a API pode retornar:
 
@@ -226,7 +226,7 @@ Caso o usuário possua uma identidade de clan, a API pode retornar:
 
 ---
 
-## 🔗 Contas conectadas
+##  Contas conectadas
 
 A API também retorna as contas conectadas ao perfil do usuário.
 
@@ -244,7 +244,7 @@ Além de outras contas disponibilizadas pelo Discord.
 
 ---
 
-## 🔊 Voice
+##  Voice
 
 O sistema de voz funciona separadamente do status de conexão.
 
@@ -265,7 +265,7 @@ Quando o usuário está conectado a um canal de voz, a API pode identificar:
 
 ---
 
-# 🦇 Sistema de Cache
+#  Sistema de Cache
 
 A API possui um sistema interno de cache.
 
@@ -280,7 +280,7 @@ Benefícios:
 
 ---
 
-# 🦇 Variáveis de Ambiente
+#  Variáveis de Ambiente
 
 Toda informação sensível fica armazenada no arquivo `.env`.
 
@@ -293,9 +293,9 @@ VITE_DISCORD_SERVER_ID=ID_DO_SERVIDOR
 
 ---
 
-# 🦇 Para que serve cada variável?
+# Para que serve cada variável?
 
-## 🔹 VITE_DISCORD_BOT_TOKEN
+##  VITE_DISCORD_BOT_TOKEN
 
 Token utilizado pelo Discord.js para obter informações necessárias para o funcionamento da API.
 
@@ -310,7 +310,7 @@ Entre elas:
 
 ---
 
-## 🔹 DISCORD_USER_TOKEN
+##  DISCORD_USER_TOKEN
 
 Token utilizado para acessar informações adicionais do perfil disponibilizadas pelo endpoint de perfil do Discord.
 
@@ -329,13 +329,13 @@ Essas informações podem incluir:
 
 ---
 
-## 🔹 VITE_DISCORD_ID
+## VITE_DISCORD_ID
 
 Define o usuário padrão utilizado quando nenhum ID é informado na rota.
 
 ---
 
-## 🔹 VITE_DISCORD_SERVER_ID
+## VITE_DISCORD_SERVER_ID
 
 Define o servidor utilizado pelo Discord.js para obter informações relacionadas a:
 
@@ -372,9 +372,11 @@ http://localhost:3001
 
 ---
 
-# 🦇 Preview
+# 📸 Preview
 
 A API retorna todas as informações organizadas em uma única resposta JSON.
+
+![Preview do JSON da API](docs/assets/card-preview.png)
 
 A estrutura principal da resposta é dividida em:
 
@@ -388,25 +390,10 @@ nitro
 boost
 badges
 connected_accounts
-```
-
-Dentro de `presence`, também estão disponíveis as informações referentes ao status de conexão:
-
-```text
-active_on_discord_web
-active_on_discord_desktop
-active_on_discord_mobile
-active_on_discord_embedded
-active_on_discord_vr
-```
-
-Esses campos são independentes entre si e permitem identificar em quais plataformas o usuário está conectado ao Discord.
-
-O sistema de **status de conexão** é separado do sistema de **Voice**, portanto uma conexão ativa no Discord Web, Desktop ou Mobile não significa necessariamente que o usuário esteja conectado a um canal de voz.
 
 ---
 
-# 🦇 Recursos
+# Recursos
 
 - ✅ Perfil completo
 - ✅ Avatar

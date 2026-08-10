@@ -22,21 +22,19 @@ User data, Nitro, Boost, Presence, Activities, Connection Status, Badges, Clan I
 
 # About
 
-</div>
-
 The **Discord Profile API** makes it easy to retrieve nearly all available information about a Discord user’s profile.
 
 Instead of calling multiple Discord endpoints yourself, this API centralizes everything into one clean, structured JSON response.
 
-Built entirely in **TypeScript** for a clear architecture, strong typing, and easier maintenance.
+Built entirely in **TypeScript** for a clear architecture, sqtrong typing, and easier maintenance.
+
+</div>
 
 ---
 
 <div align="center">
 
 # API Structure
-
-</div>
 
 ```text
 src/
@@ -71,13 +69,13 @@ Each class has a single, clear responsibility.
 | UserVoice | Detects if the user is in a voice channel |
 | CacheService | Temporarily stores responses to reduce Discord requests |
 
+</div>
+
 ---
 
 <div align="center">
 
 # Endpoint
-
-</div>
 
 ```text
 GET /api/discord/:userId
@@ -85,17 +83,21 @@ GET /api/discord/:userId
 
 If no ID is provided, the API uses the default user defined in the `.env` file.
 
+</div>
+
 ---
 
 <div align="center">
 
 # What the API returns
 
-</div>
-
 The response contains structured information about the Discord user, grouped into clear sections.
 
+</div>
+
 ---
+
+<div align="center">
 
 ## User
 
@@ -110,7 +112,11 @@ The response contains structured information about the Discord user, grouped int
 - Display name history
 - Avatar Decorations
 
+</div>
+
 ---
+
+<div align="center">
 
 ## Presence
 
@@ -129,7 +135,11 @@ It also returns:
 - Activities
 - Rich Presence
 
+</div>
+
 ---
+
+<div align="center">
 
 ## Connection Status
 
@@ -155,7 +165,11 @@ Returned fields:
 
 Connection status is independent from voice. Being online on Desktop, Web, or Mobile does **not** mean the user is in a voice channel.
 
+</div>
+
 ---
+
+<div align="center">
 
 ## Activities
 
@@ -181,7 +195,11 @@ Activities may include:
 - Application
 - Activity state
 
+</div>
+
 ---
+
+<div align="center">
 
 ## Nitro
 
@@ -197,7 +215,11 @@ The API automatically calculates Nitro-related information.
 
 Badge assets are resolved dynamically.
 
+</div>
+
 ---
+
+<div align="center">
 
 ## Server Boost
 
@@ -210,7 +232,11 @@ It also calculates automatically:
 - Next level date
 - Boost progression
 
+</div>
+
 ---
+
+<div align="center">
 
 ## Badges
 
@@ -223,7 +249,11 @@ Each badge may include:
 - Icon hash
 - Icon URL
 
+</div>
+
 ---
+
+<div align="center">
 
 ## Clan Identity
 
@@ -236,7 +266,11 @@ If the user has a clan identity, the API may return:
 - Badge URL
 - Identity state
 
+</div>
+
 ---
+
+<div align="center">
 
 ## Connected Accounts
 
@@ -252,7 +286,11 @@ The API also returns accounts linked to the user’s profile, such as:
 
 Plus other accounts exposed by Discord.
 
+</div>
+
 ---
+
+<div align="center">
 
 ## Voice
 
@@ -273,13 +311,13 @@ When the user is connected to a voice channel, the API can identify:
 - Streaming
 - Camera
 
+</div>
+
 ---
 
 <div align="center">
 
 # Cache System
-
-</div>
 
 The API includes an internal cache to avoid unnecessary repeated calls to Discord.
 
@@ -290,13 +328,13 @@ Benefits:
 - Fewer outbound requests
 - Lower risk of hitting rate limits
 
+</div>
+
 ---
 
 <div align="center">
 
 # Environment Variables
-
-</div>
 
 Sensitive values are stored in the `.env` file.
 
@@ -307,13 +345,13 @@ VITE_DISCORD_ID=USER_ID
 VITE_DISCORD_SERVER_ID=SERVER_ID
 ```
 
+</div>
+
 ---
 
 <div align="center">
 
 # What each variable is for
-
-</div>
 
 ## `VITE_DISCORD_BOT_TOKEN`
 
@@ -325,8 +363,6 @@ Token used by Discord.js to fetch data required by the API, including:
 - Member
 - Status
 - Voice State
-
----
 
 ## `DISCORD_USER_TOKEN`
 
@@ -343,13 +379,9 @@ Token used to access additional profile information from Discord’s profile end
 - Connected Accounts
 - Bio
 
----
-
 ## `VITE_DISCORD_ID`
 
 Default user used when no ID is provided in the route.
-
----
 
 ## `VITE_DISCORD_SERVER_ID`
 
@@ -362,13 +394,13 @@ Guild used by Discord.js to obtain data related to:
 - Boost
 - Member
 
+</div>
+
 ---
 
 <div align="center">
 
 # How to run
-
-</div>
 
 Install dependencies:
 
@@ -388,6 +420,8 @@ The API will be available at:
 http://localhost:3001
 ```
 
+</div>
+
 ---
 
 <div align="center">
@@ -397,8 +431,6 @@ http://localhost:3001
 The API returns all profile information organized into a single JSON response.
 
 ![API JSON response preview](docs/assets/card-preview.png)
-
-</div>
 
 Main response structure:
 
@@ -414,17 +446,17 @@ badges
 connected_accounts
 ```
 
+</div>
+
 ---
 
 <div align="center">
 
 # Features
 
-</div>
-
-<table>
+<table align="center" width="100%">
 <tr>
-<td width="50%" valign="top">
+<td width="33%" valign="top" align="center">
 
 ### Profile
 
@@ -437,7 +469,7 @@ connected_accounts
 - Theme Colors
 
 </td>
-<td width="50%" valign="top">
+<td width="33%" valign="top" align="center">
 
 ### Presence
 
@@ -450,10 +482,7 @@ connected_accounts
 - VS Code
 
 </td>
-</tr>
-
-<tr>
-<td width="50%" valign="top">
+<td width="33%" valign="top" align="center">
 
 ### Discord
 
@@ -468,7 +497,10 @@ connected_accounts
 - HypeSquad
 
 </td>
-<td width="50%" valign="top">
+</tr>
+
+<tr>
+<td width="33%" valign="top" align="center">
 
 ### Account
 
@@ -479,10 +511,7 @@ connected_accounts
 - Cache
 
 </td>
-</tr>
-
-<tr>
-<td width="50%" valign="top">
+<td width="33%" valign="top" align="center">
 
 ### Technology
 
@@ -491,7 +520,7 @@ connected_accounts
 - Discord.js
 
 </td>
-<td width="50%" valign="top">
+<td width="33%" valign="top" align="center">
 
 ### API
 
@@ -505,6 +534,8 @@ connected_accounts
 </td>
 </tr>
 </table>
+
+</div>
 
 ---
 

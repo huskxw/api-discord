@@ -381,7 +381,9 @@ A API retorna todas as informações organizadas em uma única resposta JSON.
 
 A estrutura principal da resposta é dividida em:
 
-```text
+```
+
+text
 user
 user_profile
 clan_identity

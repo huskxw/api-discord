@@ -18,7 +18,7 @@ The entire application was developed in **TypeScript**, bringing an organized st
 
 ---
 
-# 🦇 Technologies
+# Technologies
 
 <img src="https://skillicons.dev/icons?i=typescript,nodejs,express,discordjs&perline=4" height="80"/>
 
@@ -29,7 +29,6 @@ The entire application was developed in **TypeScript**, bringing an organized st
 ---
 
 </div>
-
 
 
 #  Estrutura da API

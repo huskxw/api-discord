@@ -1,18 +1,32 @@
 # 🦇 Discord Profile API
 
-### Uma API desenvolvida em **TypeScript** para obter informações completas de perfis do Discord.
+<div align="center">
 
-Ela reúne dados do usuário, Nitro, Boost, Presence, Activities, Status de conexão, Badges, Clan Identity, Spotify, VS Code, Contas Conectadas e muito mais em um único endpoint.
+### An API developed in **TypeScript** to fetch complete Discord profile information.
+
+It gathers user data, Nitro, Boost, Presence, Activities, Connection Status, Badges, Clan Identity, Spotify, VS Code, Connected Accounts, and much more into a single endpoint.
 
 ---
 
-#  Sobre
+# About
 
-A **Discord Profile API** foi criada para facilitar a obtenção de praticamente todas as informações disponíveis sobre o perfil de um usuário do Discord.
+The **Discord Profile API** was created to make it easy to retrieve virtually all available information about a Discord user's profile.
 
-Ao invés de realizar diversas requisições diferentes para a API do Discord, esta API centraliza tudo em uma única resposta JSON organizada.
+Instead of making multiple different requests to the Discord API, this API centralizes everything into a single, organized JSON response.
 
-Toda a aplicação foi desenvolvida em **TypeScript**, trazendo uma estrutura organizada, tipagem forte e fácil manutenção.
+The entire application was developed in **TypeScript**, bringing an organized structure, strong typing, and easy maintenance.
+
+---
+
+# 🦇 Technologies
+
+<img src="https://skillicons.dev/icons?i=typescript,nodejs,express,discordjs&perline=4" height="80"/>
+
+<br>
+
+<img src="https://skillicons.dev/icons?i=javascript,npm&perline=4" height="60"/>
+
+</div>
 
 ---
 

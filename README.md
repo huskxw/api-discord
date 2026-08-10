@@ -380,12 +380,6 @@ The API returns all profile information organized into a single JSON response.
 
 <div align="center">
 
-<table> <tr> <td align="center">
-
-<img src="docs/assets/card-preview.png" alt="API JSON Preview" width="500">
-
-</td> </tr> </table>
-
 </div>
 
 The main response structure is divided into:

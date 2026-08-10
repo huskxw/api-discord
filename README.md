@@ -1,6 +1,6 @@
-# 🦇 Discord Profile API
-
 <div align="center">
+
+# 🦇 Discord Profile API
 
 ### An API developed in **TypeScript** to fetch complete Discord profile information.
 
@@ -26,9 +26,9 @@ The entire application was developed in **TypeScript**, bringing an organized st
 
 <img src="https://skillicons.dev/icons?i=javascript,npm&perline=4" height="60"/>
 
-</div>
-
 ---
+
+</div>
 
 
 
